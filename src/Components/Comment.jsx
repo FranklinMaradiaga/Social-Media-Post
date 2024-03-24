@@ -1,9 +1,9 @@
 import React from 'react'
 
-const Comment = () => {
+const Comment = ( {content} ) => {
   return (
     <div>
-        <p> Test Component! </p>
+        <p> {content}  </p>
     </div>
   )
 }
