@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import Comment from './Comment'
 
-const Post = () => {
+const Post = ( {content} ) => {
 
   const [likes, setLikes] = useState(0);
 
@@ -12,7 +12,7 @@ const Post = () => {
 
   return (
     <div>
-        <h3> Test Post </h3>
+        <h3> {content} </h3>
         <p> This is a test post we'll edit later! </p>
 
         <p> Likes: {likes} </p>
