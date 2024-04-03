@@ -1,7 +1,52 @@
 import React, { useState } from 'react'
-import Comment from './Comment'
 
-const Post = ( {content} ) => {
+const ReplyForm = ({handleComments}) => {
+  const [reply, setReply] = useState("")
+
+  const onSubmit = (event) => {
+    event.preventDefault()
+    handleComments(reply)
+  }
+
+  return (
+    <form onSubmit={onSubmit}>
+      
+      <textarea placeholder='Add Your Reply!' onChange={(event) => {
+        setReply(event.target.value)
+      }} value={reply}/>
+
+      <br></br>
+
+      <input type='submit' />
+
+      <br></br>
+      <br></br>
+
+    </form>
+  )
+}
+
+const ReplyList = ({data}) => {
+
+  console.log("Whats the data?", data)
+  
+  const renderComments = () => {
+    return (
+      data.map(d => (
+        <p key={d}> {d} </p>
+      ))
+    )
+  }
+
+  return (
+    <div>
+       {renderComments()}
+    </div>
+  )
+
+}
+
+const Post = ( {title, content} ) => {
 
   const [likes, setLikes] = useState(0);
 
@@ -10,18 +55,23 @@ const Post = ( {content} ) => {
     setLikes(likes + 1)
   }
 
+  const [comments, setComments] = useState([])
+
+  const handleComments = (comment) => {
+    setComments([...comments, comment])
+  }
+
   return (
-    <div>
-        <h3> {content} </h3>
-        <p> This is a test post we'll edit later! </p>
+    <div className='Post'>
+        <h3> {title} </h3>
+        <p> {content} </p>
 
         <p> Likes: {likes} </p>
         <button onClick={handleLike}> Like </button>
 
         <p> Comments: </p>
-        <Comment content="This is a test comment!" />
-        <Comment content="This is another test comment!" />
-        <Comment content="This is yet another test comment!" />
+        <ReplyForm handleComments={handleComments}/>
+        <ReplyList data={comments} />
     </div>
   )
 }
